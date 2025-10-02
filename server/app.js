@@ -23,9 +23,7 @@ app.use(
       "http://127.0.0.1:5500",
       "http://localhost:5500",
       "http://localhost:3000",
-      // Add your production frontend domains here:
-      // "https://your-frontend.vercel.app",
-      // "https://your-frontend.netlify.app",
+      "https://apta-survey-form.vercel.app"
     ],
   })
 );
@@ -59,11 +57,11 @@ app.post("/api/submit-survey", async (req, res) => {
     }
 
     const insertSQL = `
-      INSERT INTO apta_feedback
-      (name, country, function, role, support, response, clarity, reports, overall, comments)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-      RETURNING id, created_at
-    `;
+  INSERT INTO apta_feedback
+  (name, country, "function", role, support, response, clarity, reports, overall, comments)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+  RETURNING id, created_at
+`;
 
     const params = [
       name.trim(),
