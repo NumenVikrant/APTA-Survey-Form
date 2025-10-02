@@ -53,18 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    try {
-      const resp = await fetch(`${SERVER_URL}/api/submit-survey`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      // 🎉 Clean Badge Popup
-      // 🎉 Clean Badge Popup
-      Swal.fire({
-        title: "You did it! 🎉",
-        html: `
+    // 🎉 Clean Badge Popup
+    // 🎉 Clean Badge Popup
+    Swal.fire({
+      title: "You did it! 🎉",
+      html: `
     <p style="font-size:18px; margin-bottom: 20px; font-weight:500;">
       Thanks for leveling up the APTA Ops experience 🚀
     </p>
@@ -74,21 +67,27 @@ document.addEventListener("DOMContentLoaded", () => {
       style="width: 550px; max-width: 90%; margin: 20px auto; display:block;"
     />
   `,
-        showConfirmButton: false,
-        timer: 5000,
-        backdrop: `rgba(0,0,0,0.45)`,
+      showConfirmButton: false,
+      timer: 5000,
+      backdrop: `rgba(0,0,0,0.45)`,
+    });
+
+    // 🎊 Confetti
+    setTimeout(() => {
+      confetti({
+        particleCount: 180,
+        spread: 90,
+        origin: { y: 0.6 },
+      });
+    }, 400);
+
+    try {
+      const resp = await fetch(`${SERVER_URL}/api/submit-survey`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
-      // 🎊 Confetti
-      setTimeout(() => {
-        confetti({
-          particleCount: 180,
-          spread: 90,
-          origin: { y: 0.6 },
-        });
-      }, 400);
-
-      
       if (!resp.ok) {
         const data = await resp.json().catch(() => ({}));
         throw new Error(data.message || "Server error");
@@ -98,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
       form.classList.add("hidden");
       successEl.classList.remove("hidden");
       form.reset();
-
     } catch (err) {
       console.error(err);
       show(errorEl, "Unable to submit. " + (err?.message || "Unknown error"));
