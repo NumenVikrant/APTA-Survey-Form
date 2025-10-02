@@ -60,16 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(formData),
       });
 
-      if (!resp.ok) {
-        const data = await resp.json().catch(() => ({}));
-        throw new Error(data.message || "Server error");
-      }
-
-      // ✅ Hide form and show success
-      form.classList.add("hidden");
-      successEl.classList.remove("hidden");
-      form.reset();
-
       // 🎉 Clean Badge Popup
       // 🎉 Clean Badge Popup
       Swal.fire({
@@ -97,6 +87,18 @@ document.addEventListener("DOMContentLoaded", () => {
           origin: { y: 0.6 },
         });
       }, 400);
+
+      
+      if (!resp.ok) {
+        const data = await resp.json().catch(() => ({}));
+        throw new Error(data.message || "Server error");
+      }
+
+      // ✅ Hide form and show success
+      form.classList.add("hidden");
+      successEl.classList.remove("hidden");
+      form.reset();
+
     } catch (err) {
       console.error(err);
       show(errorEl, "Unable to submit. " + (err?.message || "Unknown error"));
