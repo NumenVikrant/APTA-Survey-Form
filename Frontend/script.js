@@ -81,6 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }, 400);
 
+     // ✅ Hide form and show success
+      form.classList.add("hidden");
+      successEl.classList.remove("hidden");
+      form.reset();
+
     try {
       const resp = await fetch(`${SERVER_URL}/api/submit-survey`, {
         method: "POST",
@@ -93,10 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(data.message || "Server error");
       }
 
-      // ✅ Hide form and show success
-      form.classList.add("hidden");
-      successEl.classList.remove("hidden");
-      form.reset();
     } catch (err) {
       console.error(err);
       show(errorEl, "Unable to submit. " + (err?.message || "Unknown error"));
