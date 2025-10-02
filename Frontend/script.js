@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ✅ Download Excel (Admin)
   if (downloadBtn) {
     downloadBtn.addEventListener("click", () => {
-      const token = prompt("Varify Admin");
+      const token = prompt("Verify Admin");
       if (!token) return;
       window.open(`${SERVER_URL}/api/download-survey?token=${token}`, "_blank");
     });
