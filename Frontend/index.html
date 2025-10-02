@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APTA Feedback Form</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+      body {
+        background-color: #f8faff;
+      }
+      .emoji-option input:checked + label {
+        border-color: #e1251b;
+        background-color: #fff5f5;
+        color: #e1251b;
+        box-shadow: 0 0 0 2px #fca5a5;
+      }
+      .emoji-option label:hover {
+        border-color: #fca5a5;
+        color: #e1251b;
+      }
+      .hidden {
+        display: none;
+      }
+      .fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <body
+    class="min-h-screen flex flex-col items-center justify-center p-6 bg-[#f8faff]"
+  >
+    <!-- Admin Download Button (Top-right, hidden by default) -->
+    <div id="downloadContainer" class="hidden absolute top-6 right-6">
+      <button
+        id="downloadBtn"
+        type="button"
+        class="px-4 py-2 rounded-lg font-semibold text-white bg-[#E1251B] hover:bg-[#c01f16] shadow-md"
+      >
+        Admin
+      </button>
+    </div>
+
+    <!-- Lenovo Logo -->
+    <div class="mb-6" data-aos="fade-down">
+      <img
+        src="https://origin-brandworld.lenovo.com/wp-content/uploads/2022/06/LenovoLogo_POS-Red-H-2048x683.png"
+        alt="Lenovo Logo"
+        class="mt-9 h-14 object-contain"
+      />
+    </div>
+
+    <!-- Form Container -->
+    <div
+      class="bg-white rounded-2xl shadow-xl w-full max-w-xl p-8 space-y-6 fade-in"
+      data-aos="fade-up"
+    >
+      <!-- Progress Indicator -->
+      <div
+        id="progress"
+        class="flex justify-between text-sm font-medium text-gray-500"
+      >
+        <span id="stepIndicator">Step 1 of 3</span>
+        <span id="progressText">Basic Information</span>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-2">
+        <div
+          id="progressBar"
+          class="bg-[#E1251B] h-2 rounded-full transition-all duration-300"
+          style="width: 33%"
+        ></div>
+      </div>
+
+      <h2 class="text-2xl font-semibold text-gray-800 text-center">
+        APTA Operations Feedback
+      </h2>
+
+      <!-- Feedback Form -->
+      <form id="surveyForm" class="space-y-6">
+        <!-- SECTION 1 -->
+        <div id="section1" class="space-y-4 fade-in">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Name</label
+            >
+            <input
+              id="name"
+              name="name"
+              type="text"
+              data-required
+              class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-[#E1251B] focus:outline-none"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Country / Region</label
+            >
+            <input
+              id="country"
+              name="country"
+              type="text"
+              data-required
+              class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-[#E1251B] focus:outline-none"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Function / Team</label
+            >
+            <input
+              id="function"
+              name="function"
+              type="text"
+              data-required
+              class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-[#E1251B] focus:outline-none"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Role</label
+            >
+            <select
+              id="role"
+              name="role"
+              data-required
+              class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-[#E1251B] focus:outline-none"
+            >
+              <option value="">Select Role</option>
+              <option>Recruiter</option>
+              <option>Coordinator</option>
+              <option>Sourcer</option>
+              <option>Manager</option>
+            </select>
+          </div>
+          <div class="flex justify-end pt-4">
+            <button
+              type="button"
+              id="next1"
+              class="px-6 py-2 rounded-lg font-semibold text-white bg-[#E1251B] hover:bg-[#c01f16]"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div id="section2" class="space-y-6 hidden fade-in">
+          <!-- Support -->
+          <div>
+            <label class="block text-gray-800 font-medium mb-2">
+              How satisfied are you with the overall support provided by the
+              APTA Operations team?
+            </label>
+            <div class="flex justify-between emoji-option gap-2">
+              <input
+                type="radio"
+                id="support1"
+                name="support"
+                value="1"
+                class="hidden"
+              />
+              <label
+                for="support1"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-frown text-3xl"></i>
+                <span class="text-sm mt-1">Terrible</span>
+              </label>
+              <input
+                type="radio"
+                id="support2"
+                name="support"
+                value="2"
+                class="hidden"
+              />
+              <label
+                for="support2"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-sad-tear text-3xl"></i>
+                <span class="text-sm mt-1">Bad</span>
+              </label>
+              <input
+                type="radio"
+                id="support3"
+                name="support"
+                value="3"
+                class="hidden"
+              />
+              <label
+                for="support3"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-meh text-3xl"></i>
+                <span class="text-sm mt-1">Okay</span>
+              </label>
+              <input
+                type="radio"
+                id="support4"
+                name="support"
+                value="4"
+                class="hidden"
+              />
+              <label
+                for="support4"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-smile text-3xl"></i>
+                <span class="text-sm mt-1">Good</span>
+              </label>
+              <input
+                type="radio"
+                id="support5"
+                name="support"
+                value="5"
+                class="hidden"
+              />
+              <label
+                for="support5"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-laugh-beam text-3xl"></i>
+                <span class="text-sm mt-1">Amazing</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Response -->
+          <div>
+            <label class="block text-gray-800 font-medium mb-2">
+              How would you rate the response time from the operations team?
+            </label>
+            <div class="flex justify-between emoji-option gap-2">
+              <input
+                type="radio"
+                id="response1"
+                name="response"
+                value="1"
+                class="hidden"
+              />
+              <label
+                for="response1"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-frown text-3xl"></i>
+                <span class="text-sm mt-1">Terrible</span>
+              </label>
+              <input
+                type="radio"
+                id="response2"
+                name="response"
+                value="2"
+                class="hidden"
+              />
+              <label
+                for="response2"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-sad-tear text-3xl"></i>
+                <span class="text-sm mt-1">Bad</span>
+              </label>
+              <input
+                type="radio"
+                id="response3"
+                name="response"
+                value="3"
+                class="hidden"
+              />
+              <label
+                for="response3"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-meh text-3xl"></i>
+                <span class="text-sm mt-1">Okay</span>
+              </label>
+              <input
+                type="radio"
+                id="response4"
+                name="response"
+                value="4"
+                class="hidden"
+              />
+              <label
+                for="response4"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-smile text-3xl"></i>
+                <span class="text-sm mt-1">Good</span>
+              </label>
+              <input
+                type="radio"
+                id="response5"
+                name="response"
+                value="5"
+                class="hidden"
+              />
+              <label
+                for="response5"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-laugh-beam text-3xl"></i>
+                <span class="text-sm mt-1">Amazing</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Clarity -->
+          <div>
+            <label class="block text-gray-800 font-medium mb-2">
+              How clear and helpful are the communications and updates shared by
+              the APTA Operations team?
+            </label>
+            <div class="flex justify-between emoji-option gap-2">
+              <input
+                type="radio"
+                id="clarity1"
+                name="clarity"
+                value="1"
+                class="hidden"
+              />
+              <label
+                for="clarity1"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-frown text-3xl"></i>
+                <span class="text-sm mt-1">Terrible</span>
+              </label>
+              <input
+                type="radio"
+                id="clarity2"
+                name="clarity"
+                value="2"
+                class="hidden"
+              />
+              <label
+                for="clarity2"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-sad-tear text-3xl"></i>
+                <span class="text-sm mt-1">Bad</span>
+              </label>
+              <input
+                type="radio"
+                id="clarity3"
+                name="clarity"
+                value="3"
+                class="hidden"
+              />
+              <label
+                for="clarity3"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-meh text-3xl"></i>
+                <span class="text-sm mt-1">Okay</span>
+              </label>
+              <input
+                type="radio"
+                id="clarity4"
+                name="clarity"
+                value="4"
+                class="hidden"
+              />
+              <label
+                for="clarity4"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-smile text-3xl"></i>
+                <span class="text-sm mt-1">Good</span>
+              </label>
+              <input
+                type="radio"
+                id="clarity5"
+                name="clarity"
+                value="5"
+                class="hidden"
+              />
+              <label
+                for="clarity5"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-laugh-beam text-3xl"></i>
+                <span class="text-sm mt-1">Amazing</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Reports -->
+          <div>
+          </div>
+
+          <div class="flex justify-between pt-4">
+            <button
+              type="button"
+              id="prev2"
+              class="px-6 py-2 rounded-lg border font-semibold text-[#E1251B] border-[#E1251B] hover:bg-[#E1251B]/10"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              id="next2"
+              class="px-6 py-2 rounded-lg font-semibold text-white bg-[#E1251B] hover:bg-[#c01f16]"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div id="section3" class="space-y-6 hidden fade-in">
+          <div>
+            <label class="block text-gray-800 font-medium mb-2">
+              Overall, how satisfied are you with your experience working with
+              the APTA Operations team?
+            </label>
+            <div class="flex justify-between emoji-option gap-2">
+              <input
+                type="radio"
+                id="overall1"
+                name="overall"
+                value="1"
+                class="hidden"
+              />
+              <label
+                for="overall1"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-frown text-3xl"></i>
+                <span class="text-sm mt-1">Terrible</span>
+              </label>
+              <input
+                type="radio"
+                id="overall2"
+                name="overall"
+                value="2"
+                class="hidden"
+              />
+              <label
+                for="overall2"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-sad-tear text-3xl"></i>
+                <span class="text-sm mt-1">Bad</span>
+              </label>
+              <input
+                type="radio"
+                id="overall3"
+                name="overall"
+                value="3"
+                class="hidden"
+              />
+              <label
+                for="overall3"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-meh text-3xl"></i>
+                <span class="text-sm mt-1">Okay</span>
+              </label>
+              <input
+                type="radio"
+                id="overall4"
+                name="overall"
+                value="4"
+                class="hidden"
+              />
+              <label
+                for="overall4"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-smile text-3xl"></i>
+                <span class="text-sm mt-1">Good</span>
+              </label>
+              <input
+                type="radio"
+                id="overall5"
+                name="overall"
+                value="5"
+                class="hidden"
+              />
+              <label
+                for="overall5"
+                class="flex flex-col items-center border rounded-lg px-3 py-2 cursor-pointer"
+              >
+                <i class="fa-regular fa-face-laugh-beam text-3xl"></i>
+                <span class="text-sm mt-1">Amazing</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-800 font-medium mb-2"
+              >Any final comments or suggestions?</label
+            >
+            <textarea
+              id="comments"
+              name="comments"
+              rows="3"
+              class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-[#E1251B] focus:outline-none"
+            ></textarea>
+          </div>
+
+          <div class="flex justify-between pt-4">
+            <button
+              type="button"
+              id="prev3"
+              class="px-6 py-2 rounded-lg border font-semibold text-[#E1251B] border-[#E1251B] hover:bg-[#E1251B]/10"
+            >
+              Previous
+            </button>
+            <button
+              type="submit"
+              class="px-6 py-2 rounded-lg font-semibold text-white bg-[#E1251B] hover:bg-[#c01f16]"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div
+        id="formStatus"
+        class="text-green-600 text-sm font-medium hidden"
+      ></div>
+      <div id="formError" class="text-red-600 text-sm font-medium hidden"></div>
+
+      <!-- ✅ Success Message -->
+      <div id="successMessage" class="hidden text-center space-y-4 fade-in">
+        <div class="text-4xl">🎉</div>
+        <h3 class="text-lg font-semibold text-gray-800">
+          Thank you for your feedback!
+        </h3>
+        <p class="text-sm text-gray-500">
+          Your response has been recorded successfully.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      AOS.init({ duration: 800, once: true });
+
+      const section1 = document.getElementById("section1");
+      const section2 = document.getElementById("section2");
+      const section3 = document.getElementById("section3");
+      const stepIndicator = document.getElementById("stepIndicator");
+      const progressText = document.getElementById("progressText");
+      const progressBar = document.getElementById("progressBar");
+
+      function toggleSection(showSection) {
+        const sections = [section1, section2, section3];
+        sections.forEach((sec) => {
+          if (sec === showSection) {
+            sec.classList.remove("hidden");
+            sec
+              .querySelectorAll("[data-required]")
+              .forEach((el) => (el.required = true));
+          } else {
+            sec.classList.add("hidden");
+            sec
+              .querySelectorAll("[data-required]")
+              .forEach((el) => (el.required = false));
+          }
+        });
+      }
+
+      const downloadContainer = document.getElementById("downloadContainer");
+
+      function updateProgress(step) {
+        stepIndicator.textContent = `Step ${step} of 3`;
+        const texts = [
+          "Basic Information",
+          "Experience with APTA Operations",
+          "Overall Satisfaction",
+        ];
+        progressText.textContent = texts[step - 1];
+        progressBar.style.width = step * 33 + "%";
+
+        // ✅ Show or hide download button based on current step
+        if (step === 3) {
+          downloadContainer.classList.remove("hidden");
+        } else {
+          downloadContainer.classList.add("hidden");
+        }
+      }
+
+      // 🔄 Navigation handlers
+      document.getElementById("next1").onclick = () => {
+        toggleSection(section2);
+        updateProgress(2);
+      };
+      document.getElementById("next2").onclick = () => {
+        toggleSection(section3);
+        updateProgress(3);
+      };
+      document.getElementById("prev2").onclick = () => {
+        toggleSection(section1);
+        updateProgress(1);
+      };
+      document.getElementById("prev3").onclick = () => {
+        toggleSection(section2);
+        updateProgress(2);
+      };
+    </script>
+
+    <script src="script.js"></script>
+
+  </body>
+</html>
