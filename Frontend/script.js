@@ -1,5 +1,5 @@
 // Replace with your actual server URL
-const SERVER_URL = "http://localhost:3000";
+const SERVER_URL = "https://apta-survey-form.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("surveyForm");
