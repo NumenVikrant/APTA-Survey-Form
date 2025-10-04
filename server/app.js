@@ -43,7 +43,6 @@ app.post("/api/submit-survey", async (req, res) => {
       support,
       response,
       clarity,
-      reports,
       overall,
       comments,
     } = req.body;
@@ -54,7 +53,6 @@ app.post("/api/submit-survey", async (req, res) => {
       !support ||
       !response ||
       !clarity ||
-      !reports ||
       !overall ||
       !comments
     ) {
@@ -71,7 +69,6 @@ app.post("/api/submit-survey", async (req, res) => {
           support: parseInt(support) || null,
           response: parseInt(response) || null,
           clarity: parseInt(clarity) || null,
-          reports: reports || null,
           overall: parseInt(overall) || null,
           comments,
         },
@@ -117,7 +114,6 @@ app.get("/api/download-survey", async (req, res) => {
       "support",
       "response",
       "clarity",
-      "reports",
       "overall",
       "comments",
     ];
@@ -139,7 +135,6 @@ app.get("/api/download-survey", async (req, res) => {
         row.support,
         row.response,
         row.clarity,
-        row.reports,
         row.overall,
         row.comments,
       ]);
