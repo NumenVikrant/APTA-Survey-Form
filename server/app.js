@@ -36,8 +36,6 @@ app.post("/api/submit-survey", async (req, res) => {
   try {
     const {
       name,
-      country,
-      function: func,
       role,
       support,
       response,
@@ -57,8 +55,6 @@ app.post("/api/submit-survey", async (req, res) => {
       .insert([
         {
           name,
-          country,
-          function: func,
           role,
           support: parseInt(support) || null,
           response: parseInt(response) || null,
@@ -103,8 +99,6 @@ app.get("/api/download-survey", async (req, res) => {
     const headers = [
       "timestamp",
       "name",
-      "country",
-      "function",
       "role",
       "support",
       "response",
@@ -124,8 +118,6 @@ app.get("/api/download-survey", async (req, res) => {
       stringifier.write([
         row.created_at,
         row.name,
-        row.country,
-        row.function,
         row.role,
         row.support,
         row.response,
