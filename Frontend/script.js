@@ -19,8 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const formData = {
       name: getValue("name"),
-      country: getValue("country"),
-      function: getValue("function"),
       role: getValue("role"),
       support: getValue("support"),
       response: getValue("response"),
@@ -35,8 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ Validation
     if (
       !formData.name ||
-      !formData.country ||
-      !formData.function ||
       !formData.role ||
       !formData.support ||
       !formData.response ||
