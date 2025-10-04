@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
       support: getValue("support"),
       response: getValue("response"),
       clarity: getValue("clarity"),
-      reports: getValue("reports"),
       overall: getValue("overall"),
       comments: getValue("comments"),
     };
