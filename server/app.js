@@ -10,7 +10,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // ✅ Supabase Client
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+);
 
 // ✅ Middleware
 app.use(express.json());
@@ -45,7 +48,16 @@ app.post("/api/submit-survey", async (req, res) => {
       comments,
     } = req.body;
 
-    if (!name || !role || !support ||response ||clarity) {
+    if (
+      !name ||
+      !role ||
+      !support ||
+      !response ||
+      !clarity ||
+      !reports ||
+      !overall ||
+      !comments
+    ) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
@@ -68,7 +80,9 @@ app.post("/api/submit-survey", async (req, res) => {
 
     if (error) {
       console.error("Supabase insert error:", error);
-      return res.status(500).json({ message: "Database error", error: error.message });
+      return res
+        .status(500)
+        .json({ message: "Database error", error: error.message });
     }
 
     return res.json({ ok: true, inserted: data });
@@ -109,7 +123,10 @@ app.get("/api/download-survey", async (req, res) => {
     ];
 
     res.setHeader("Content-Type", "text/csv; charset=utf-8");
-    res.setHeader("Content-Disposition", "attachment; filename=apta_feedback_responses.csv");
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=apta_feedback_responses.csv"
+    );
 
     const stringifier = stringify({ header: true, columns: headers });
     stringifier.pipe(res);
