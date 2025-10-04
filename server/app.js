@@ -45,7 +45,7 @@ app.post("/api/submit-survey", async (req, res) => {
       comments,
     } = req.body;
 
-    if (!name || !country || !func || !role) {
+    if (!name || !role || !support ||response ||clarity) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
